@@ -35,7 +35,7 @@ class ServicosController extends Controller
 
     public function novoServicoSistema(Request $request)
     {
-        try {
+        // try {
             $novoPedido = new Servicos;
             $novoPedido->nome_servico = $request->descricao;
             $novoPedido->id_cliente = $request->id_cliente;
@@ -46,9 +46,9 @@ class ServicosController extends Controller
             $this->gerarBoleto($novoPedido->id_cliente, $novoPedido->id_servico, $novoPedido->quantidade);
             
             return response()->json('Pedido realizado e boleto para pagamento enviado no e-mail.');
-        } catch (\Throwable $th) {
-            return response()->json(false);
-        }
+        // } catch (\Throwable $th) {
+        //     return response()->json(false);
+        // }
     }
 
     public function gerarBoleto($id_cliente, $id_servico, $quantidade)
