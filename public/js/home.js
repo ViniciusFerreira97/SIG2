@@ -152,7 +152,7 @@ $(document).ready(function () {
                     var html;
                     for(let i=0; i<data.length; i++)
                     {
-                        html += `<tr><th scope="row">${data[i]['id_cliente']}</th><td>${data[i]['desc_cliente']}</td><td>${data[i]['hash']}</td></tr>`;
+                        html += `<tr><th scope="row">${data[i]['id_cliente']}</th><td>${data[i]['desc_cliente']}</td><td>${data[i]['email']}</td><td>${data[i]['hash']}</td></tr>`;
                     }
                     $('#tabelaClientes').empty();
                     $('#tabelaClientes').append(html);
@@ -166,11 +166,12 @@ $(document).ready(function () {
     $('#btnCadastrarNovoCliente').on('click', function(){
         let nome = $('#nomeCliente').val();
         let hash = $('#hashCliente').val();
+        let email = $('#emailCliente').val();
         var baseUrl = document.location.origin + '/cliente/criar';
         $.ajax({
             type: "POST",
             url: baseUrl,
-            data: {'desc_cliente': nome, 'hash':hash},
+            data: {'desc_cliente': nome, 'hash':hash, 'email':email},
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },

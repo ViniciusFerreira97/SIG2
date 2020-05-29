@@ -18,6 +18,7 @@ class ClientesController extends Controller
             $cliente = new Cliente;
             $cliente->desc_cliente = $request->desc_cliente;
             $cliente->hash = $request->hash;
+            $cliente->email = $request->email;
             $cliente->save();
             return response()->json('Registro salvo com sucesso.');
         } catch (\Throwable $th) {

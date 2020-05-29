@@ -192,6 +192,7 @@
                     <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Nome</th>
+                    <th scope="col">Email</th>
                     <th scope="col">Hash</th>
                     </tr>
                 </thead>
@@ -208,6 +209,15 @@
                 <div class="md-form">
                     <input type="text" id="nomeCliente" class="form-control">
                     <label for="nomeCliente">Nome Cliente</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4">
+                <div class="md-form">
+                    <input type="text" id="emailCliente" class="form-control">
+                    <label for="emailCliente">Email Cliente</label>
                 </div>
             </div>
         </div>
