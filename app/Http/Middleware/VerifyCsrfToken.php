@@ -12,6 +12,7 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        //
+        'apiSeder/servico/criar/',
+        'apiSeder/servicos/listar/',
     ];
 }

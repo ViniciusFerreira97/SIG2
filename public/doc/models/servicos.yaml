@@ -1,0 +1,109 @@
+swagger: "2.0"
+info:
+  description: "API de acesso Seder"
+  version: "1.0.0"
+  title: "API Seder"
+host: "----"
+basePath: "/apiSeder/"
+
+schemes:
+- "http"
+
+paths:
+  /servico/criar:
+    post:
+      tags:
+      - "Novo Pedido"
+      summary: ""
+      description: "Solicitação de Novo Pedido"
+      operationId: "novoServico"
+      consumes:
+      - "multipart/form-data"
+      parameters:
+        - in: formData
+          name: keyAcesso
+          description: "KEY Acesso API"
+          required: true
+          type: string
+          
+        - in: formData
+          name: descricao
+          description: "Descrição Serviço"
+          required: true
+          type: string
+
+        - in: formData
+          name: quantidade
+          description: "Quantidade Solicitada"
+          required: true
+          type: string
+
+        
+      produces:
+      - "application/json"
+
+      responses:
+        '200':
+          description: "Registro salvo com sucesso"
+        '401':
+          description: "Não Autorizado"
+        '500':
+          description: "Ocorreu um erro ao processar sua solicitação."
+
+  /servicos/listar:
+    post:
+      tags:
+      - "Listar Serviços"
+      summary: ""
+      description: "Listar serviços já solicitados."
+      operationId: "listarServicos"
+      parameters:
+        - in: formData
+          name: keyAcesso
+          description: "KEY Acesso API"
+          required: true
+          type: string
+
+      produces:
+      - "application/json"
+
+      responses:
+        '200':
+          description: 
+          schema:
+            type: object
+            properties:
+              id_servico:
+                type: "integer"
+                format: "int64"
+                description: Código do Serviço.
+              nome_servico:
+                type: "string"
+                description: Descricao Serviço.
+              quantidade:
+                type: "integer"
+                format: "int64"
+                description: Quantidade Solicitada.
+              cd_status:
+                type: "integer"
+                format: "int64"
+                description: Código Status.
+          examples:
+            application/json:
+             - id_servico: 1
+               nome_servico: Impressão Livro 1
+               quantidade: 100
+               cd_status: 1
+             - id_servico: 2
+               nome_servico: Impressão Livro 2
+               quantidade: 80
+               cd_status: 2
+             - id_servico: 3
+               nome_servico: Impressão Livro 3
+               quantidade: 150
+               cd_status: 3
+        '401':
+          description: "Não autorizado."
+        '500':
+          description: "Ocorreu um erro ao processar sua solicitação."
+

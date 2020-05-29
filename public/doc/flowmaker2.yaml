@@ -1,0 +1,705 @@
+swagger: "2.0"
+info:
+  description: "API de acesso as funcionalidades do Meu Bernoulli 2.0"
+  version: "1.0.4"
+  title: "API Meu Bernoulli"
+host: "meu2.bernoulli.com.br"
+basePath: "/mb2019/api"
+
+schemes:
+- "https"
+
+paths:
+  /professor/login/{email}/{senha}:
+    get:
+      tags:
+      - "Autenticação"
+      summary: ""
+      description: "Realiza a autenticação de um professor"
+      operationId: "loginProfessor"
+
+      parameters:
+        - in: path
+          name: email
+          description: "E-mail do professor"
+          required: true
+          type: string
+
+        - in: path
+          name: senha
+          description: "Senha de acesso"
+          required: true
+          type: string
+
+      produces:
+      - "application/json"
+
+      responses:
+        '200':
+          description: Autenticação realizada com sucesso
+          schema:
+            type: object
+            properties:
+              cd_professor:
+                type: "integer"
+                format: "int64"
+                description: Código do professor.
+              nm_professor:
+                type: "string"
+                description: Nome do professor.
+              cd_escola:
+                type: "integer"
+                format: "int64"
+                description: Código da escola.
+              nm_escola:
+                type: "string"
+                description: Nome da escola.
+              ds_token:
+                type: "string"
+                description: Token de acesso para as transações.
+          examples:
+            application/json:
+              {
+                "cd_professor":1,
+                "nm_professor":"Marcos Aurélio Ribeiro",
+                "cd_escola": 11,
+                "nm_escola":"Colégio Bernoulli",
+                "ds_token":"agmVb9bQNvz4SwomKM57pMoDaPM43QNy87aLXEZU"
+
+              }
+        '401':
+          description: "Usuário e/ou senha inválido."
+        '404':
+          description: "Professor não localizado."
+
+  /unidades/{codigoEscola}/{codigoProfessor}:
+    get:
+      tags:
+      - "Unidades"
+      summary: ""
+      description: "Lista as unidades de uma escola"
+      operationId: "unidadesPorEscola"
+
+      parameters:
+        - in: path
+          name: codigoEscola
+          description: "Código da escola"
+          required: true
+          type: "integer"
+
+        - in: path
+          name: codigoProfessor
+          description: "Código do professor"
+          required: true
+          type: "integer"
+
+
+      produces:
+      - "application/json"
+
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              cd_unidade:
+                type: "integer"
+                format: "int64"
+                description: Código da unidade.
+              nm_unidade:
+                type: "string"
+                description: Nome da unidade.
+
+          examples:
+            application/json:
+             - cd_unidade: 12
+               nm_unidade: Colégio Bernoulli  - Lourdes
+             - cd_unidade: 488
+               nm_unidade: Colégio Bernoulli - GO
+             - cd_unidade: 297
+               nm_unidade: Colégio Bernoulli - Santo Agostinho
+
+  /turmas/{codigoUnidade}/{codigoProfessor}:
+    get:
+      tags:
+      - "Turmas"
+      summary: ""
+      description: "Lista as turmas e disciplinas do professor em uma unidade"
+      operationId: "listaTurmasProfessor"
+      parameters:
+        - in: path
+          name: codigoUnidade
+          description: "Código da unidade"
+          required: true
+          type: "integer"
+
+        - in: path
+          name: codigoProfessor
+          description: "Código do professor"
+          required: true
+          type: "integer"
+
+      produces:
+      - "application/json"
+
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              cd_serie:
+                type: "integer"
+                format: "int64"
+                description: Código da série.
+              nm_serie:
+                type: "string"
+                description: Nome da série.
+              cd_turma:
+                type: "integer"
+                format: "int64"
+                description: Código da turma.
+              nm_turma:
+                type: "string"
+                description: Nome da turma.
+
+          examples:
+            application/json:
+             - cd_serie: 13
+               nm_serie: EM1
+               cd_turma: 129
+               nm_turma: 5EXT03
+             - cd_serie: 13
+               nm_serie: EM1
+               cd_turma: 1
+               nm_turma: 5M1A
+
+
+  /disciplinas/{codigoUnidade}/{codigoProfessor}:
+    get:
+      tags:
+      - "Disciplinas"
+      summary: ""
+      description: "Lista as turmas e disciplinas do professor em uma unidade"
+      operationId: "listaDisciplinasProfessor"
+      parameters:
+        - in: path
+          name: codigoUnidade
+          description: "Código da unidade"
+          required: true
+          type: "integer"
+
+        - in: path
+          name: codigoProfessor
+          description: "Código do professor"
+          required: true
+          type: "integer"
+
+      produces:
+      - "application/json"
+
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              cd_disciplina:
+                type: "integer"
+                format: "int64"
+                description: Código da disciplina.
+              nm_disciplina:
+                type: "string"
+                description: Nome da disciplina.
+              cd_serie:
+                type: "integer"
+                format: "int64"
+                description: Código da série.
+              nm_serie:
+                type: "string"
+                description: Nome da série.
+              cd_turma:
+                type: "integer"
+                format: "int64"
+                description: Código da turma.
+              nm_turma:
+                type: "string"
+                description: Nome da turma.
+
+          examples:
+            application/json:
+             - cd_disciplina: 2
+               nm_disciplina: Biologia
+               cd_serie: 13
+               nm_serie: EM1
+               cd_turma: 129
+               nm_turma: 5EXT03
+             - cd_disciplina: 2
+               nm_disciplina: Biologia
+               cd_serie: 13
+               nm_serie: EM1
+               cd_turma: 1
+               nm_turma: 5M1A
+             - cd_disciplina: 17
+               nm_disciplina: Ciências
+               cd_serie: 14
+               nm_serie: EM2
+               cd_turma: 1
+               nm_turma: 5M1A
+             - cd_disciplina: 17
+               nm_disciplina: Ciências
+               cd_serie: 14
+               nm_serie: EM2
+               cd_turma: 3
+               nm_turma: 5M3A
+
+
+  /trilhas/{codigoSerie}:
+    get:
+      tags:
+      - "Trilhas"
+      summary: ""
+      description: "Lista as trilhas vinculadas a série"
+      operationId: "listaTrilhasSerie"
+
+      parameters:
+        - in: path
+          name: codigoSerie
+          description: "Código da série"
+          required: true
+          type: "integer"
+
+
+
+      produces:
+      - "application/json"
+
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              cd_trilha:
+                type: "integer"
+                format: "int64"
+                description: Código da trilha
+              ds_trilha:
+                type: "string"
+                description: Nome da trilha
+              ds_cor_1:
+                type: "string"
+                description: Cor 1
+              ds_cor_2:
+                type: "string"
+                description: Cor 2
+              ds_cor_3:
+                type: "string"
+                description: Cor 3
+
+
+          examples:
+            application/json:
+             - cd_trilha: 1
+               ds_trilha: "Trilha 01"
+               ds_cor_1: "#ffffff"
+               ds_cor_2: "#ffff00"
+               ds_cor_3: "#ff0000"
+             - cd_trilha: 2
+               ds_trilha: "Trilha 02"
+               ds_cor_1: "#ffffff"
+               ds_cor_2: "#ffff00"
+               ds_cor_3: "#ff0000"
+
+  /arquivos/{codigoEscola}/{codigoUnidade}/{codigoProfessor}/{codigoTrilha}/{codigoTurma}:
+    get:
+      tags:
+      - "Arquivos"
+      summary: ""
+      description: "Lista as arquivos de um professor"
+      operationId: "listaArquivos"
+
+      parameters:
+        - in: path
+          name: codigoEscola
+          description: "Código da escola"
+          required: true
+          type: "integer"
+        - in: path
+          name: codigoUnidade
+          description: "Código da unidade"
+          required: true
+          type: "integer"
+        - in: path
+          name: codigoProfessor
+          description: "Código do professor"
+          required: true
+          type: "integer"
+        - in: path
+          name: codigoTrilha
+          description: "Código da trilha  (enviar 0 para todas as trilhas)"
+          required: true
+          type: "integer"
+        - in: path
+          name: codigoTurma
+          description: "Código da turma (enviar 0 para todas as turmas)"
+          required: true
+          type: "integer"
+
+
+      produces:
+      - "application/json"
+
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              cd_escola:
+                type: "integer"
+                format: "int64"
+                description: Código da escola.
+              cd_unidade:
+                type: "string"
+                description: Código da unidade.
+              cd_tipo_aruivo:
+                type: "integer"
+                format: "int64"
+                description: Código do tipo de arquivo (1 - imagem, 2 - vídeo).
+              cd_professor:
+                type: "string"
+                description: Código do professor.
+              cd_trilha:
+                type: "string"
+                description: Código da trilha.
+              cd_serie:
+                type: "integer"
+                format: "int64"
+                description: Código da série.
+              cd_turma:
+                type: "string"
+                description: Código da turma.
+              dh_inclusao:
+                type: "string"
+                description: Data e hora da inclusão do arquivo.
+                format: "date-time"
+              ds_titulo:
+                type: "string"
+                description: Título da atividade.
+              ds_arquivo:
+                type: "string"
+                description: Descrição da atividade.
+              ds_url_arquivo:
+                type: "string"
+                description: URL para acesso ao vídeo.
+              curtidas:
+                type: "integer"
+                format: "int64"
+                description: Quantidade de curtidas do vídeo.
+
+
+          examples:
+            application/json:
+            - cd_arquivo: 15
+              cd_tipo_arquivo: 1
+              cd_escola: 11
+              cd_unidade: 12
+              cd_professor: 38
+              cd_trilha: 1
+              cd_serie: 13
+              cd_turma: 1
+              dh_inclusao: '2019-03-07 13:30:22'
+              ds_arquivo: Prática de formação 01
+
+              ds_url_arquivo: null
+              curtidas: 3
+            - cd_arquivo: 16
+              cd_tipo_arquivo: 1
+              cd_escola: 11
+              cd_unidade: 12
+              cd_professor: 38
+              cd_trilha: 1
+              cd_serie: 13
+              cd_turma: 1
+              dh_inclusao: '2019-03-07 13:30:22'
+              ds_arquivo: Prática de formação 01
+              ds_url_arquivo: null
+              curtidas: 2
+
+
+  /arquivo:
+    post:
+      tags:
+      - "Cadastro"
+      summary: ""
+      description: "Realiza o envio de um arquivo ou imagem"
+      operationId: "salvaArquivo"
+      consumes:
+      - "multipart/form-data"
+      parameters:
+        - name: X-CSRF-TOKEN
+          in: header
+          description: Token de autorização no header
+          required: true
+          type: string
+
+        - in: formData
+          name: cd_escola
+          description: "Código da escola"
+          required: true
+          type: "integer"
+
+        - in: formData
+          name: cd_unidade
+          description: "Código da unidade"
+          required: true
+          type: "integer"
+
+        - in: formData
+          name: cd_tipo_arquivo
+          description: "Código do tipo de arquivo (1 - Imagem, 2 - Vídeo)"
+          required: true
+          type: "integer"
+
+        - in: formData
+          name: cd_professor
+          description: "Código do professor"
+          required: true
+          type: "integer"
+
+        - in: formData
+          name: cd_trilha
+          description: "Código da trilha"
+          required: true
+          type: "integer"
+
+        - in: formData
+          name: cd_serie
+          description: "Código da série"
+          required: true
+          type: "integer"
+
+        - in: formData
+          name: cd_turma
+          description: "Código da turma"
+          required: true
+          type: "integer"
+
+        - in: formData
+          name: ds_titulo
+          description: "Título do arquivo"
+          required: true
+          type: "string"
+
+        - in: formData
+          name: ds_arquivo
+          description: "Descrição do arquivo"
+          required: true
+          type: "string"
+
+        - in: formData
+          name: ds_conteudo_arquivo
+          description: "Conteúdo do arquivo em Base64"
+          required: true
+          type: "string"
+
+
+      produces:
+      - "application/json"
+
+      responses:
+        '500':
+          description: Erro interno ao persistir o arquivo
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              cd_escola:
+                type: "integer"
+                format: "int64"
+                description: Código da escola.
+              cd_unidade:
+                type: "string"
+                description: Código da unidade.
+              cd_tipo_aruivo:
+                type: "integer"
+                format: "int64"
+                description: Código do tipo de arquivo (1 - imagem, 2 - vídeo).
+              cd_professor:
+                type: "integer"
+                format: "int64"
+                description: Código do professor.
+              cd_trilha:
+                type: "integer"
+                format: "int64"
+                description: Código da trilha.
+              cd_serie:
+                type: "integer"
+                format: "int64"
+                description: Código da série.
+              cd_turma:
+                type: "string"
+                description: Código da turma.
+              dh_inclusao:
+                type: "string"
+                description: Data e hora da inclusão do arquivo.
+                format: "date-time"
+              ds_titulo:
+                type: "string"
+                description: Título da atividade.
+              ds_arquivo:
+                type: "string"
+                description: Descrição da atividade.
+              ds_conteudo_arquivo:
+                type: "string"
+                description: Conteúdo do arquivo em Base64
+              ds_url_arquivo:
+                type: "string"
+                description: URL para acesso ao vídeo.
+
+          examples:
+            application/json:
+             cd_escola: '11'
+             cd_unidade: '12'
+             cd_tipo_arquivo: '1'
+             cd_professor: '37'
+             cd_trilha: '1'
+             cd_serie: '13'
+             cd_turma: '1'
+             dh_inclusao:
+               date: '2019-02-13 09:17:36.000000'
+               timezone_type: 3
+               timezone: America/Sao_Paulo
+             ds_titulo: Prática de formação 01
+             ds_arquivo: Compreenter os elementos da robótica
+             ds_conteudo_arquivo: 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
+
+
+  /alterarArquivo:
+    post:
+      tags:
+      - "Alterar"
+      summary: ""
+      description: "Atualiza um registro"
+      operationId: "alterarArquivo"
+      consumes:
+      - "multipart/form-data"
+      parameters:
+        - name: X-CSRF-TOKEN
+          in: header
+          description: Token de autorização no header
+          required: true
+          type: string
+
+        - in: formData
+          name: cd_arquivo
+          description: "Código do arquivo"
+          required: true
+          type: "integer"
+
+        - in: formData
+          name: cd_trilha
+          description: "Código da trilha arquivo"
+          required: true
+          type: "integer"
+
+        - in: formData
+          name: ds_titulo
+          description: "Título do arquivo"
+          required: true
+          type: "string"
+
+        - in: formData
+          name: ds_arquivo
+          description: "Descrição do arquivo"
+          required: true
+          type: "string"
+
+      produces:
+      - "application/json"
+
+      responses:
+        '500':
+          description: Erro interno no servidor.
+        '200':
+          description: Alterado com sucesso.
+        '401':
+          description: Campo preenchido incorretamente.
+
+  /removerArquivo:
+    post:
+      tags:
+      - "Apagar"
+      summary: ""
+      description: "Remover"
+      operationId: "removerArquivo"
+      consumes:
+      - "multipart/form-data"
+      parameters:
+        - name: X-CSRF-TOKEN
+          in: header
+          description: Token de autorização no header
+          required: true
+          type: string
+
+        - in: formData
+          name: cd_arquivo
+          description: "Código do arquivo"
+          required: true
+          type: "integer"
+
+      produces:
+      - "application/json"
+
+      responses:
+        '500':
+          description: Erro interno no servidor.
+        '200':
+          description: Removido com sucesso.
+        '401':
+          description: Campo preenchido incorretamente.
+
+  /getImagem:
+    post:
+      tags:
+      - "Imagem"
+      summary: ""
+      description: "Obter a imagem de um arquivo"
+      operationId: "getImagem"
+      consumes:
+      - "multipart/form-data"
+      parameters:
+        - name: X-CSRF-TOKEN
+          in: header
+          description: Token de autorização no header
+          required: true
+          type: string
+
+        - in: formData
+          name: cd_arquivo
+          description: "Código do arquivo"
+          required: true
+          type: "integer"
+
+      produces:
+      - "application/json"
+
+      responses:
+        '500':
+          description: Erro interno no servidor.
+        '200':
+          description: Alterado com sucesso.
+          schema:
+            type: object
+            properties:
+              ds_conteudo_arquivo:
+                type: "string"
+                description: Conteúdo do arquivo em Base64
+          examples:
+            application/json:
+             ds_conteudo_arquivo: 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
+        '401':
+          description: Código do arquivo inválido.
