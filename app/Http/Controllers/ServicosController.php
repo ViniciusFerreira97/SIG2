@@ -88,6 +88,7 @@ class ServicosController extends Controller
         try {
             $acesso = Cliente::where('hash', $request->keyAcesso)->first();
             $pedidos = Servicos::select(['id_servico', 'nome_servico', 'descricao', 'quantidade', 'flg_pagamento'])
+            ->join('status', 'status.cd_status', '=', 'servicos.cd_status')
             ->where('id_cliente', $acesso->id_cliente)->get();
 
             return response()->json($pedidos);
