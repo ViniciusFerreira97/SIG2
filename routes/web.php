@@ -19,7 +19,7 @@ Route::prefix('/apiSeder')->group(function () {
 
     Route::group(['middleware' => 'APIAutenticate'], function () {
         Route::post('/servico/criar',  'ServicosController@novoServico');
-        Route::post('/servicos/listar',  'ServicosController@listagemDeServicos');
+        Route::get('/servicos/listar/{hashUsuario}',  'ServicosController@listagemDeServicos');
     });
 });
 

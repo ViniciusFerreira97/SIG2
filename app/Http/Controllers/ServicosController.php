@@ -83,10 +83,10 @@ class ServicosController extends Controller
         }
     }
 
-    public function listagemDeServicos(Request $request)
+    public function listagemDeServicos($hashUsuario)
     {
         try {
-            $acesso = Cliente::where('hash', $request->keyAcesso)->first();
+            $acesso = Cliente::where('hash', $hashUsuario)->first();
             $pedidos = Servicos::select(['id_servico', 'nome_servico', 'descricao', 'quantidade', 'flg_pagamento'])
             ->join('status', 'status.cd_status', '=', 'servicos.cd_status')
             ->where('id_cliente', $acesso->id_cliente)->get();
