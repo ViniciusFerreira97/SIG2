@@ -19,11 +19,11 @@ class APIAutenticate
     public function handle($request, Closure $next, $guard = null)
     {
 
-        $acesso = Cliente::where('hash', $request->keyAcesso)->first();
-        if(!$acesso)
-        {
-            return response()->json('Não Autorizado.');
-        }
+        // $acesso = Cliente::where('hash', $request->keyAcesso)->first();
+        // if(!$acesso)
+        // {
+        //     return response()->json('Não Autorizado.');
+        // }
         return $next($request);
     }
 }
